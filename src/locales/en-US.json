@@ -1,0 +1,6 @@
+{
+  "home": {
+    "greeting": "Hello, {{username}}!",
+    "greetingFallback": "Hello!"
+  }
+}
