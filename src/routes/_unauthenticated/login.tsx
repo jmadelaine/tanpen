@@ -1,10 +1,9 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
-import { logInWithPassword, redirectIfAuthenticated } from '../auth/api';
-import { setTokens } from '../auth/session';
+import { logInWithPassword } from '../../auth/api';
+import { setTokens } from '../../auth/session';
 
-export const Route = createFileRoute('/login')({
-  beforeLoad: redirectIfAuthenticated,
+export const Route = createFileRoute('/_unauthenticated/login')({
   component: LoginPage,
 });
 
