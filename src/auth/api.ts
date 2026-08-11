@@ -1,6 +1,5 @@
 import { request } from '../api/request';
 import { clearTokens } from './session';
-import { redirect } from '@tanstack/react-router';
 
 export type AuthSession = {
   id: string;
@@ -43,11 +42,5 @@ export async function validateAccessToken() {
   } catch {
     clearTokens();
     return false;
-  }
-}
-
-export async function redirectIfAuthenticated() {
-  if (await validateAccessToken()) {
-    throw redirect({ to: '/' });
   }
 }
