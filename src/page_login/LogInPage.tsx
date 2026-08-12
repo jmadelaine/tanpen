@@ -1,11 +1,7 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { logInWithPassword } from '../auth/api';
 import { setTokens } from '../auth/session';
-
-export const Route = createFileRoute('/_unauthenticated/login')({
-  component: LoginPage,
-});
 
 export function LoginPage() {
   const router = useRouter();
