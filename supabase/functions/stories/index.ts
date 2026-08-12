@@ -18,6 +18,14 @@ type VoteInput = {
   vote?: unknown;
 };
 
+type StoryCreateInput = {
+  title: string;
+  body: string;
+  is_published?: boolean;
+};
+
+type StoryUpdateInput = Partial<StoryCreateInput>;
+
 type StoryRow = {
   id: string;
   author_id: string;
@@ -28,23 +36,18 @@ type StoryRow = {
   updated_at: string;
 };
 
-type CommentRow = {
-  id: string;
-  story_id: string;
-  author_id: string;
-  body: string;
-  created_at: string;
-  updated_at: string;
-};
-
-const validateStoryInput = (body: StoryInput | undefined, partial = false) => {
+function validateStoryInput(body: StoryInput | undefined): StoryCreateInput | undefined;
+function validateStoryInput(
+  body: StoryInput | undefined,
+  partial: true,
+): StoryUpdateInput | undefined;
+function validateStoryInput(
+  body: StoryInput | undefined,
+  partial = false,
+): StoryCreateInput | StoryUpdateInput | undefined {
   if (!body) return undefined;
 
-  const input: {
-    title?: string;
-    body?: string;
-    is_published?: boolean;
-  } = {};
+  const input: StoryUpdateInput = {};
 
   if (typeof body.title === 'string') input.title = body.title.trim();
   if (typeof body.body === 'string') input.body = body.body;
@@ -53,7 +56,16 @@ const validateStoryInput = (body: StoryInput | undefined, partial = false) => {
   if (!partial && (!input.title || input.body === undefined)) return undefined;
   if (input.title !== undefined && !input.title) return undefined;
 
-  return input;
+  return input as StoryCreateInput | StoryUpdateInput;
+}
+
+type CommentRow = {
+  id: string;
+  story_id: string;
+  author_id: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
 };
 
 const storyStats = async (client: ReturnType<typeof createDbClient>, storyIds: string[]) => {

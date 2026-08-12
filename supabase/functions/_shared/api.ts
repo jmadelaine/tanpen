@@ -4,7 +4,7 @@ import { AuthError } from '@supabase/supabase-js';
 type Route = {
   path: string;
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  handler: (req: Request, params: Record<string, string | undefined>) => Promise<Response>;
+  handler: (req: Request, params: Record<string, string>) => Promise<Response>;
 };
 
 const defaultAllowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
@@ -57,7 +57,10 @@ export const createApi = (...routes: Route[]) => {
       const regex = regexMap.get(route.path);
       const values = regex?.exec(url.pathname)?.slice(1) ?? [];
       const params = Object.fromEntries(
-        routeParamKeys(route.path).map((key, index) => [key, decodeURIComponent(values[index])]),
+        routeParamKeys(route.path).map((key, index) => [
+          key,
+          decodeURIComponent(values[index] ?? ''),
+        ]),
       );
       const response = await route.handler(req, params);
 

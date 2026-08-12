@@ -7,6 +7,7 @@
     "dev": "vite --open",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "typecheck": "tsc -b",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "gen-be-types": "supabase gen types typescript --local > supabase/functions/_shared/types.gen.ts && node ./node_modules/prettier/bin/prettier.cjs --write supabase/functions/_shared/types.gen.ts"
