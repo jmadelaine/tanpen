@@ -18,20 +18,13 @@ export type PasswordAuthResponse =
       id: string;
       email: string | null;
       pendingEmailConfirmation: true;
-    }
-  | {
-      error:
-        | 'invalid_email'
-        | 'invalid_credentials'
-        | 'email_exists'
-        | 'weak_password'
-        | 'unknown_error';
     };
 
 export function logInWithPassword(input: { email: string; password: string }) {
   return request<PasswordAuthResponse>('/auth/log-in-with-password', {
     method: 'POST',
     body: input,
+    refreshOnUnauthorized: false,
   });
 }
 
