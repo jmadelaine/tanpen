@@ -7,6 +7,7 @@ import { useState } from 'react';
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
 
   const router = useRouter();
   const logInMutation = useMutation({
@@ -24,12 +25,15 @@ export function LoginPage() {
         void router.invalidate();
       }
     },
-    onError: () => {},
+    onError: (e) => {
+      console.log(e);
+    },
   });
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     logInMutation.mutate();
+    console.log(logInMutation.isError);
   };
 
   return (
