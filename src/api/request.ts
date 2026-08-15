@@ -5,6 +5,7 @@ const apiUrl =
 
 type ApiRequestOptions = Omit<RequestInit, 'body'> & {
   body?: unknown;
+  refreshOnUnauthorized?: boolean;
 };
 
 type RefreshTokenResponse =
@@ -28,7 +29,9 @@ const requestHeaders = (body: unknown, headers: HeadersInit | undefined) => {
   return requestHeaders;
 };
 
-const sendRequest = (path: string, options: ApiRequestOptions) => {
+type SendRequestOptions = Omit<ApiRequestOptions, 'refreshOnUnauthorized'>;
+
+const sendRequest = (path: string, options: SendRequestOptions) => {
   const { body, headers, ...init } = options;
 
   return fetch(`${apiUrl}${path}`, {
@@ -37,6 +40,17 @@ const sendRequest = (path: string, options: ApiRequestOptions) => {
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 };
+
+export class ApiRequestError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+    public readonly error?: string,
+  ) {
+    super(message);
+    this.name = 'ApiRequestError';
+  }
+}
 
 const parseRefreshResponse = async (response: Response) => {
   if (!response.ok) return null;
@@ -78,18 +92,37 @@ const refreshTokensOnce = () => {
 };
 
 const throwRequestError = async (response: Response): Promise<never> => {
-  const message = await response.text();
-  throw new Error(message || `Request failed with ${response.status}`);
+  const text = await response.text();
+  const data = text
+    ? (() => {
+        try {
+          return JSON.parse(text) as unknown;
+        } catch {
+          return null;
+        }
+      })()
+    : null;
+  const error =
+    data && typeof data === 'object' && 'error' in data && typeof data.error === 'string'
+      ? data.error
+      : undefined;
+
+  throw new ApiRequestError(
+    error ?? (text || `Request failed with ${response.status}`),
+    response.status,
+    error,
+  );
 };
 
 export async function request<TResponse>(
   path: string,
   options: ApiRequestOptions = {},
 ): Promise<TResponse> {
-  let response = await sendRequest(path, options);
+  const { refreshOnUnauthorized = true, ...requestOptions } = options;
+  let response = await sendRequest(path, requestOptions);
 
-  if (response.status === 401 && (await refreshTokensOnce())) {
-    response = await sendRequest(path, options);
+  if (response.status === 401 && refreshOnUnauthorized && (await refreshTokensOnce())) {
+    response = await sendRequest(path, requestOptions);
   }
 
   if (!response.ok) {

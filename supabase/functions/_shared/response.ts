@@ -21,11 +21,20 @@ const jsonResponse = (status: number, data?: JsonLike) =>
     headers: { 'Content-Type': 'application/json' },
   });
 
+const errorResponse = (status: number, error: string) => jsonResponse(status, { error });
+
 export const okay = (data?: JsonLike) =>
   jsonResponse(data === undefined || data === null ? 204 : 200, data);
 
 export const created = (data?: JsonLike) => jsonResponse(201, data);
 
-export const badRequest = (message = 'Bad Request') => jsonResponse(400, { error: message });
+export const badRequest = (message = 'Bad Request') => errorResponse(400, message);
 
-export const notFound = (message = 'Not Found') => jsonResponse(404, { error: message });
+export const unauthorized = (message = 'Unauthorized') => errorResponse(401, message);
+
+export const conflict = (message = 'Conflict') => errorResponse(409, message);
+
+export const unprocessableEntity = (message = 'Unprocessable Entity') =>
+  errorResponse(422, message);
+
+export const notFound = (message = 'Not Found') => errorResponse(404, message);

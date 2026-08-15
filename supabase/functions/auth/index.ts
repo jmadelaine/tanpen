@@ -3,7 +3,13 @@ import { AuthError as SupabaseAuthError } from '@supabase/supabase-js';
 import { createApi } from '../_shared/api.ts';
 import { createDbClient, getUser } from '../_shared/dbClient.ts';
 import { jsonBody } from '../_shared/request.ts';
-import { badRequest, okay } from '../_shared/response.ts';
+import {
+  badRequest,
+  conflict,
+  okay,
+  unauthorized,
+  unprocessableEntity,
+} from '../_shared/response.ts';
 
 type PasswordAuthInput = {
   email?: unknown;
@@ -33,7 +39,22 @@ const toAuthError = (error: SupabaseAuthError): AuthError => {
   }
 };
 
-const authErrorResponse = (error: SupabaseAuthError) => okay({ error: toAuthError(error) });
+const authErrorResponse = (error: SupabaseAuthError) => {
+  const authError = toAuthError(error);
+
+  switch (authError) {
+    case 'invalid_credentials':
+      return unauthorized(authError);
+    case 'invalid_email':
+      return badRequest(authError);
+    case 'email_exists':
+      return conflict(authError);
+    case 'weak_password':
+      return unprocessableEntity(authError);
+    case 'unknown_error':
+      return badRequest(authError);
+  }
+};
 
 const sessionResponse = (
   id: string,
