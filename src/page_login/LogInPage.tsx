@@ -2,7 +2,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { logInWithPassword } from '../auth/api';
 import { setTokens } from '../auth/session';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,16 +25,23 @@ export function LoginPage() {
         void router.invalidate();
       }
     },
-    onError: (e) => {
-      console.log(e);
-    },
   });
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     logInMutation.mutate();
-    console.log(logInMutation.isError);
+    if (logInMutation.isError) {
+      setError(true);
+    }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [error]);
 
   return (
     <div>
@@ -63,6 +70,7 @@ export function LoginPage() {
           Log in
         </button>
       </form>
+      {error ? <div>{'something went wrong'}</div> : null}
     </div>
   );
 }
