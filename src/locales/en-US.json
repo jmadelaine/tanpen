@@ -2,5 +2,8 @@
   "home": {
     "greeting": "Hello, {{username}}!",
     "greetingFallback": "Hello!"
+  },
+  "login": {
+    "error": "Something went wrong"
   }
 }
