@@ -3,8 +3,10 @@ import { useMutation } from '@tanstack/react-query';
 import { logInWithPassword } from '../auth/api';
 import { setTokens } from '../auth/session';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -70,7 +72,7 @@ export function LoginPage() {
           Log in
         </button>
       </form>
-      {error ? <div>{'something went wrong'}</div> : null}
+      {error ? <div>{t('login.error')}</div> : null}
     </div>
   );
 }
