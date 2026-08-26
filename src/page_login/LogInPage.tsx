@@ -2,15 +2,13 @@ import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { logInWithPassword } from '../auth/api';
 import { setTokens } from '../auth/session';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export function LoginPage() {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-
   const router = useRouter();
   const logInMutation = useMutation({
     mutationFn: () =>
@@ -32,18 +30,7 @@ export function LoginPage() {
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     logInMutation.mutate();
-    if (logInMutation.isError) {
-      setError(true);
-    }
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setError(false);
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, [error]);
 
   return (
     <div>
@@ -53,6 +40,7 @@ export function LoginPage() {
           id="email"
           name="email"
           type="email"
+          value={email}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
@@ -63,16 +51,17 @@ export function LoginPage() {
           id="password"
           name="password"
           type="password"
+          value={password}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
         />
 
         <button type="submit" disabled={logInMutation.isPending}>
-          Log in
+          {t('login.loginButton')}
         </button>
       </form>
-      {error ? <div>{t('login.error')}</div> : null}
+      {logInMutation.isError ? <div>{t('login.error')}</div> : null}
     </div>
   );
 }

@@ -4,6 +4,7 @@
     "greetingFallback": "Hello!"
   },
   "login": {
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "loginButton": "Log in"
   }
 }
