@@ -1,14 +1,20 @@
-import { HomeStory } from '../page_home/storiesQueryOptions';
-import { Story } from './StoriesPage';
+import { useState } from 'react';
+import { Story } from '../page_home/storiesQueryOptions';
 
-export const StoryCard = ({ story }: { story: HomeStory }) => {
+export const StoryCard = ({ story }: { story: Story }) => {
+  const [expanded, setExpanded] = useState(false);
   return (
-    <div className="bg-zinc-900 flex flex-col rounded-xl p-4 gap-3">
+    <div className="bg-zinc-900 rounded-xl p-4 flex flex-col gap-3">
       <div className="flex justify-between">
         <div className="text-lg font-semibold text-white">{story.title}</div>
-        <div className="flex gap-3 text-xs text-zinc-400">{}</div>
+        <div className="flex gap-3 text-xs text-zinc-400">{`Score ${story.score},  Comments ${story.commentsCount}, ${story.createdAt}`}</div>
       </div>
-      <div className="flex gap-3 text-sm text-zinc-300"></div>
+      <div
+        onClick={() => setExpanded(!expanded)}
+        className={` text-sm text-zinc-300 cursor-pointer ${expanded ? '' : 'truncate text-ellipsis'}`}
+      >
+        {story.body.replace(/\s+/gu, '')}
+      </div>
     </div>
   );
 };
