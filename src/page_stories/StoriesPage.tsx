@@ -20,6 +20,7 @@ export const StoriesPage = () => {
         {storiesQuery.data?.map((story) => {
           return <StoryCard story={story} />;
         })}
+        //ADD KEY
       </div>
     </div>
   );
