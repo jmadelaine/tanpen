@@ -33,35 +33,44 @@ export function LoginPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">{'Email'}</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
+    <div className="flex flex-col min-h-screen items-center gap-6">
+      <header className="p-8">
+        <h1 className="text-3xl">{'Welcome To Tanpen'}</h1>
+      </header>
+      <div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <label htmlFor="email">{'Email'}</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
 
-        <label htmlFor="password">{'Password'}</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+          <label htmlFor="password">{'Password'}</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
 
-        <button type="submit" disabled={logInMutation.isPending}>
-          {t('login.loginButton')}
-        </button>
-      </form>
-      {logInMutation.isError ? <div>{t('login.error')}</div> : null}
+          <button
+            type="submit"
+            disabled={logInMutation.isPending}
+            className="flex w-full justify-center"
+          >
+            {t('login.loginButton')}
+          </button>
+        </form>
+        {logInMutation.isError ? <div>{t('login.error')}</div> : null}
+      </div>
     </div>
   );
 }
