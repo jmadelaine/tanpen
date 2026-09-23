@@ -7,6 +7,12 @@ on them, and rate them with a thumbs up or thumbs down.
 The app is built with React, Vite, Tailwind CSS, TanStack Router, and TanStack
 Query. The backend uses Supabase Edge Functions as the API layer and database.
 
+## Icons
+
+Icons from Google Material Symbols:
+[Google Material Symbols](https://fonts.google.com/icons)
+Licensed under the Apache License, Version 2.0.
+
 ---
 
 ## Development

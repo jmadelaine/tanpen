@@ -20,31 +20,28 @@ export const StoryCard = ({ story }: { story: Story }) => {
       >
         {story.body.replace(/\s+/gu, '')}
       </div>
+      <button type="button" className="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+          fill="currentColor"
+        >
+          <path d="M720-120H280v-520l280-280 50 50q7 7 11.5 19t4.5 23v14l-44 174h258q32 0 56 24t24 56v80q0 7-2 15t-4 15L794-168q-9 20-30 34t-44 14Zm-360-80h360l120-280v-80H480l54-220-174 174v406Zm0-406v406-406Zm-80-34v80H160v360h120v80H80v-520h200Z" />
+        </svg>
+      </button>
+      <button type="button" className="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+          fill="currentColor"
+        >
+          <path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z" />
+        </svg>
+      </button>
     </div>
   );
 };
-
-// //Card style:
-// Each story card should be a div flex column that contains two flex rows:
-
-// Top row:
-// Story title on the left.
-// Story metadata on the right in the following order: score, comment count, created date.
-// Second row:
-// Story body preview.
-// The preview should render as a single line and use ellipsis truncation when it overflows.
-
-// Background color bg-zinc-900.
-// Border radius rounded-xl.
-// Padding p-4.
-// Use a gap of gap-3 between the two rows in the card.
-// Top row style:
-
-// Use flex layout with title on the left and metadata on the right.
-// The title has text-lg font-semibold text-white.
-// Metadata has  text-xs text-zinc-400.
-// Use a gap of gap-3 between the metadata items: score, comment count, and created date.
-// Body preview style:
-
-// Body preview text has text-sm text-zinc-300.
-// Use one-line truncation with ellipsis, (you can use Tailwind's truncate utility class)
