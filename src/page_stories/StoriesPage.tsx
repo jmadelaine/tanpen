@@ -4,7 +4,6 @@ import { StoryCard } from './StoryCard';
 
 export const StoriesPage = () => {
   const storiesQuery = useQuery(storiesQueryOptions());
-  console.log(storiesQuery.data);
 
   if (storiesQuery.isError) {
     return <div>{'Error loading stories.'}</div>;

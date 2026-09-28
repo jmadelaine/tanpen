@@ -6,5 +6,11 @@
   "login": {
     "error": "Something went wrong",
     "loginButton": "Log in"
+  },
+  "stories": {
+    "card": {
+      "score": "Score {{score}}",
+      "commentCount": "Comments {{commentCount}}"
+    }
   }
 }
