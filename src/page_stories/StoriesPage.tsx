@@ -14,8 +14,8 @@ export const StoriesPage = () => {
   }
 
   return (
-    <div className="flex items-center justify-center ">
-      <div className="flex flex-col max-w-3xl px-4 py-10 gap-3">
+    <div className="flex justify-center ">
+      <div className="flex w-full max-w-3xl px-4 py-10 flex-col gap-3">
         {storiesQuery.data?.map((story) => {
           return <StoryCard key={story.id} story={story} />;
         })}
