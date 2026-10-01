@@ -9,8 +9,8 @@
   },
   "stories": {
     "card": {
-      "score": "Score {{score}}",
-      "commentCount": "Comments {{commentCount}}"
+      "score": "Score: {{score}}",
+      "commentCount": "Comments: {{commentCount}}"
     }
   }
 }
