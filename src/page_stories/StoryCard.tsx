@@ -14,9 +14,9 @@ export const StoryCard = ({ story }: { story: Story }) => {
       <div className="flex justify-between">
         <div className="text-lg font-semibold text-white">{story.title}</div>
         <div className="flex gap-3 text-xs text-zinc-400">
-          <div>{t('stories.card.score', { score: story.score })} </div>
-          <div> {t('stories.card.commentCount', { commentCount: story.commentsCount })} </div>
-          <div>{`Date: ${date}`}</div>
+          <div>{t('stories.card.score', { score: story.score })}</div>
+          <div>{t('stories.card.commentCount', { commentCount: story.commentsCount })}</div>
+          <div>{`${date}`}</div>
         </div>
       </div>
       <div className="truncate text-sm text-zinc-300">{story.body.replace(/\s+/gu, '')}</div>
