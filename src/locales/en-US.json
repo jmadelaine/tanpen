@@ -8,6 +8,7 @@
     "loginButton": "Log in"
   },
   "stories": {
+    "homeLink": "Home",
     "card": {
       "score": "Score: {{score}}",
       "commentCount": "Comments: {{commentCount}}"
